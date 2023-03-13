@@ -1,0 +1,3 @@
+- use singleapplication for instance management
+- mediainfoviewer split stream and show them in seperate tabs with filter and all good stuff
+-
