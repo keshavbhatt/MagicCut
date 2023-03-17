@@ -5,6 +5,7 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
     , m_mediaLibrary(new MediaLibrary(this))
+    , m_timeLine(new TimeLine(this))
 {
     ui->setupUi(this);
 
@@ -14,6 +15,10 @@ MainWindow::MainWindow(QWidget *parent)
 
     // add library widget
     ui->libraryTab->layout()->addWidget(m_mediaLibrary);
+
+    //add timeline widget
+    m_timeLine->setMinimumHeight(250);
+    ui->timeLineTopFrame->layout()->addWidget(m_timeLine);
 }
 
 MainWindow::~MainWindow()

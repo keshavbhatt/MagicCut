@@ -184,16 +184,24 @@
        <number>0</number>
       </property>
       <item>
-       <widget class="QGroupBox" name="groupBox">
+       <widget class="QGroupBox" name="timelineGroupBox">
         <property name="title">
          <string>Timeline</string>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_4">
          <item>
-          <widget class="QGraphicsView" name="graphicsView"/>
+          <widget class="QFrame" name="timeLineTopFrame">
+           <property name="frameShape">
+            <enum>QFrame::StyledPanel</enum>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Raised</enum>
+           </property>
+           <layout class="QHBoxLayout" name="horizontalLayout_6"/>
+          </widget>
          </item>
          <item>
-          <widget class="QFrame" name="frame_2">
+          <widget class="QFrame" name="timeLineToolBottomFrame">
            <property name="frameShape">
             <enum>QFrame::StyledPanel</enum>
            </property>

@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include "medialibrary.h"
+#include "timeline.h"
 #include <QMainWindow>
 
 QT_BEGIN_NAMESPACE
@@ -21,5 +22,6 @@ public:
 private:
     Ui::MainWindow *ui;
     MediaLibrary *m_mediaLibrary;
+    TimeLine *m_timeLine;
 };
 #endif // MAINWINDOW_H
