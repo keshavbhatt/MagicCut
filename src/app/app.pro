@@ -31,6 +31,7 @@ CONFIG(release, debug|release):DEFINES += QT_NO_DEBUG_OUTPUT
 include(lib/json/json.pri)
 include(lib/ffprobe/ffprobe.pri)
 include(utils.pri)
+include(widgets/widgets.pri)
 
 
 SOURCES += \
@@ -39,7 +40,8 @@ SOURCES += \
     mediainfoviewer.cpp \
     medialibrary.cpp \
     medialoader.cpp \
-    mediaplayer.cpp
+    mediaplayer.cpp \
+    timeline.cpp
 
 HEADERS += \
     filterablesortfilterproxymodel.h \
@@ -47,12 +49,14 @@ HEADERS += \
     mediainfoviewer.h \
     medialibrary.h \
     medialoader.h \
-    mediaplayer.h
+    mediaplayer.h \
+    timeline.h
 
 FORMS += \
     mainwindow.ui \
     mediainfoviewer.ui \
-    medialibrary.ui
+    medialibrary.ui \
+    timeline.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
