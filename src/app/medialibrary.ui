@@ -15,7 +15,7 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QListWidget" name="mediaListWidget"/>
+    <widget class="LibraryListWidget" name="mediaListWidget"/>
    </item>
    <item>
     <widget class="QFrame" name="toolFrame">
@@ -70,6 +70,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>LibraryListWidget</class>
+   <extends>QListWidget</extends>
+   <header>widgets/LibraryListWidget.hpp</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

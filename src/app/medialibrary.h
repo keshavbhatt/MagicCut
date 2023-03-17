@@ -4,6 +4,7 @@
 #include "mediainfoviewer.h"
 #include "medialoader.h"
 #include <QWidget>
+#include "utils.h"
 
 namespace Ui {
 class MediaLibrary;
@@ -34,6 +35,9 @@ private slots:
     void updateMediaInfoButton();
 
     void mediaInfoPb_clicked();
+
+public slots:
+    void loadFiles(QStringList &fileNames);
 };
 
 #endif // MEDIALIBRARY_H

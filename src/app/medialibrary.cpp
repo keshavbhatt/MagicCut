@@ -11,7 +11,7 @@ MediaLibrary::MediaLibrary(QWidget *parent)
     this->layout()->setContentsMargins(0, 0, 0, 0);
 
     // init mediaLoader
-    connect(m_mediaLoader, &MediaLoader::filesLoaded, ui->mediaListWidget, &QListWidget::addItems);
+    connect(m_mediaLoader, &MediaLoader::filesLoaded, this, &MediaLibrary::loadFiles);
     updateRemoveMediaButton();
     updateMediaInfoButton();
 
@@ -22,6 +22,19 @@ MediaLibrary::MediaLibrary(QWidget *parent)
 
     // init mediamediaListWidget
     connect(ui->mediaListWidget, SIGNAL(itemSelectionChanged()), this, SLOT(itemSelectionChanged()));
+}
+
+void MediaLibrary::loadFiles(QStringList &fileNames)
+{
+    foreach (const QString &fileName, fileNames) {
+        auto file_info = QFileInfo(fileName);
+        auto f_name = file_info.fileName();
+        auto f_size = Utils::formatSize(file_info.size());
+
+        QListWidgetItem *item = new QListWidgetItem(f_name + " (" + f_size + ")");
+        item->setData(Qt::UserRole, fileName);
+        ui->mediaListWidget->addItem(item);
+    }
 }
 
 void MediaLibrary::addMediaPb_clicked()
@@ -41,9 +54,10 @@ void MediaLibrary::removeMediaPb_clicked()
 
 void MediaLibrary::mediaInfoPb_clicked()
 {
-    QListWidgetItem *selectedItem = ui->mediaListWidget->currentItem();
-    if (selectedItem != nullptr) {
-        m_mediaInfoViewer = new MediaInfoViewer(this, selectedItem->text().trimmed());
+    QListWidgetItem *selected_item = ui->mediaListWidget->currentItem();
+    if (selected_item != nullptr) {
+        m_mediaInfoViewer
+            = new MediaInfoViewer(this, selected_item->data(Qt::UserRole).toString().trimmed());
         m_mediaInfoViewer->setWindowTitle(QApplication::applicationName() + " | "
                                           + "Media Information");
         m_mediaInfoViewer->setWindowFlags(Qt::Window);
