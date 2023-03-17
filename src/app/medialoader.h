@@ -2,6 +2,7 @@
 #define MEDIALOADER_H
 
 #include <QFileDialog>
+#include <QMimeDatabase>
 #include <QObject>
 
 /**
@@ -19,6 +20,10 @@ public:
      * @param parent The parent QObject (optional).
      */
     explicit MediaLoader(QObject *parent = nullptr);
+
+private:
+    QStringList m_mimeFilters;
+    QMimeDatabase m_mimeDb;
 
 public slots:
 
