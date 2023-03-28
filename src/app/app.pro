@@ -44,6 +44,7 @@ SOURCES += \
     timeline.cpp
 
 HEADERS += \
+    externals/Cachier/cachier.h \
     filterablesortfilterproxymodel.h \
     mainwindow.h \
     mediainfoviewer.h \
