@@ -1,3 +1,4 @@
 - use singleapplication for instance management
 - mediainfoviewer split stream and show them in seperate tabs with filter and all good stuff
--
+- medialibrary listwidget should also accept media file drop event to add directly to the listwidget
+- add QSplitter to split the main UI panels
