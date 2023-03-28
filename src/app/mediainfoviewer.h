@@ -1,15 +1,17 @@
 #ifndef MEDIAINFOVIEWER_H
 #define MEDIAINFOVIEWER_H
 
-#include "utils.h"
+#include "externals/Cachier/cachier.h"
 #include "filterablesortfilterproxymodel.h"
 #include "lib/ffprobe/MediaInfo.hpp"
 #include "lib/json/jsonhighlighter.h"
 #include "lib/json/jsonmodel.h"
+#include "utils.h"
 
 #include <QMessageBox>
 #include <QSortFilterProxyModel>
 #include <QWidget>
+#include <QStandardPaths>
 
 class JsonModel;
 
@@ -34,6 +36,7 @@ private:
     JsonModel *m_model;
     FilterableSortFilterProxyModel *m_proxyModel;
     int m_modelMaxDepth;
+    Cachier *cachier;
 };
 
 #endif // MEDIAINFOVIEWER_H

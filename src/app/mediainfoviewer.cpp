@@ -1,5 +1,6 @@
 #include "mediainfoviewer.h"
 #include "ui_mediainfoviewer.h"
+#include <QDir>
 
 #define MAX_TREEVIEW_EXPAND_DEPTH 2
 
@@ -16,6 +17,12 @@ MediaInfoViewer::MediaInfoViewer(QWidget *parent, const QString &filepath)
 
     connect(ui->searchLe, &QLineEdit::textChanged, this, &MediaInfoViewer::searchLe_textChanged);
 
+    QString cache_path = QStandardPaths::writableLocation(QStandardPaths::CacheLocation)
+                         + QDir::separator() + "Cachier" + QDir::separator() + "MediaInfo";
+
+    // init cachier ensuring cache path
+    cachier = new Cachier(cache_path.toStdString(), true);
+
     loadMediaInfo(filepath);
 }
 
@@ -30,9 +37,15 @@ void MediaInfoViewer::loadMediaInfo(const QString &filePath)
             &MediaInfo::infoReady,
             this,
             [=](const QString &filename, const QString &info) {
-                mediaInfo->deleteLater();
                 ui->fileName->setText(filename);
                 if (info.trimmed().simplified().isEmpty() == false) {
+                    //save to cache
+                    if (cachier->isInitialized()) {
+                        cachier->addCache(filePath.toStdString(),
+                                          info.toStdString(),
+                                          Cachier::CacheOverwriteOption::OVERWRITE_CACHE);
+                    }
+
                     // load media info data in main data model
                     m_model->setJson(info.toUtf8());
 
@@ -71,6 +84,7 @@ void MediaInfoViewer::loadMediaInfo(const QString &filePath)
                                           tr("Failed to get media information."),
                                           "Parsed information is empty!");
                 }
+                mediaInfo->deleteLater();
             });
     connect(mediaInfo, &MediaInfo::infoFailed, this, [=](const QString &error) {
         mediaInfo->deleteLater();
@@ -78,11 +92,28 @@ void MediaInfoViewer::loadMediaInfo(const QString &filePath)
                               tr("Failed to get media information."),
                               QString("Parsed information is empty!<br>%1").arg(error));
     });
-    mediaInfo->getInfo(filePath);
+
+    if (cachier->isInitialized() && cachier->cacheExists(filePath.toStdString())) {
+        Cachier::HashResult hash_result = cachier->computeHash(filePath.toStdString());
+        std::string key = std::to_string(hash_result.key);
+        if (!key.empty()) {
+            emit mediaInfo->infoReady(filePath, QString::fromStdString(cachier->getContent(key)));
+            qDebug() << "Cachier::getContent";
+        } else {
+            qDebug() << "MediaInfo::getInfo";
+            mediaInfo->getInfo(filePath);
+        }
+    } else {
+        qDebug() << "MediaInfo::getInfo";
+        mediaInfo->getInfo(filePath);
+    }
 }
 
 MediaInfoViewer::~MediaInfoViewer()
 {
+    if (cachier != nullptr) {
+        delete cachier;
+    }
     delete ui;
 }
 
