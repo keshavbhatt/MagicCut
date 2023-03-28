@@ -19,7 +19,9 @@ protected:
             for (const QUrl &url : qAsConst(mime_data_urls)) {
                 QString file_path = url.toLocalFile();
                 QMimeType mime_type = QMimeDatabase().mimeTypeForFile(file_path);
-                if (mime_type.name().contains("audio") || mime_type.name().contains("video")) {
+                QString mime_name = mime_type.name();
+                if ((mime_name.startsWith("audio/") || mime_name.startsWith("video/"))
+                    && !mime_name.contains("playlist")) {
                     event->acceptProposedAction();
                     return;
                 }
@@ -36,8 +38,10 @@ protected:
         for (const QUrl &url : qAsConst(mime_data_urls)) {
             QString file_path = url.toLocalFile();
             QMimeType mime_type = QMimeDatabase().mimeTypeForFile(file_path);
-            if (mime_type.name().contains("audio") || mime_type.name().contains("video")) {
-                emit fileDropped(file_path);
+            QString mime_name = mime_type.name();
+            if ((mime_name.startsWith("audio/") || mime_name.startsWith("video/"))
+                && !mime_name.contains("playlist")) {
+                emit mediaDropped(file_path);
                 return;
             }
         }
@@ -46,5 +50,5 @@ protected:
     }
 
 signals:
-    void fileDropped(const QString &file_path);
+    void mediaDropped(const QString &file_path);
 };

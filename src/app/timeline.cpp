@@ -8,7 +8,7 @@ TimeLine::TimeLine(QWidget *parent)
 {
     ui->setupUi(this);
 
-    connect(this, &TimeLine::fileDropped, [=](const QString &file_path) {
+    connect(this, &TimeLine::mediaDropped, [=](const QString &file_path) {
         qDebug() << QString("Dropped media file: %1").arg(file_path);
     });
 }

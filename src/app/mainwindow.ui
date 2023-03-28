@@ -20,8 +20,14 @@
       <item>
        <widget class="QTabWidget" name="tabWidget_2">
         <property name="currentIndex">
-         <number>1</number>
+         <number>0</number>
         </property>
+        <widget class="QWidget" name="libraryTab">
+         <attribute name="title">
+          <string>Library</string>
+         </attribute>
+         <layout class="QVBoxLayout" name="verticalLayout_6"/>
+        </widget>
         <widget class="QWidget" name="playerTab">
          <attribute name="title">
           <string>Player</string>
@@ -141,12 +147,6 @@
            </widget>
           </item>
          </layout>
-        </widget>
-        <widget class="QWidget" name="libraryTab">
-         <attribute name="title">
-          <string>Library</string>
-         </attribute>
-         <layout class="QVBoxLayout" name="verticalLayout_6"/>
         </widget>
        </widget>
       </item>

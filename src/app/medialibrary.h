@@ -3,8 +3,8 @@
 
 #include "mediainfoviewer.h"
 #include "medialoader.h"
-#include <QWidget>
 #include "utils.h"
+#include <QWidget>
 
 namespace Ui {
 class MediaLibrary;
@@ -20,6 +20,7 @@ public:
 
 private:
     Ui::MediaLibrary *ui;
+
     MediaLoader *m_mediaLoader;
     MediaInfoViewer *m_mediaInfoViewer;
 
@@ -37,7 +38,13 @@ private slots:
     void mediaInfoPb_clicked();
 
 public slots:
-    void loadFiles(QStringList &fileNames);
+    /**
+     * Loads files and add them to the mediaListWidget as QListWidgetItem
+     *
+     * @brief loadFiles
+     * @param filesPath QStringList containing paths of files to be loadded
+     */
+    void loadFiles(QStringList &filesPath);
 };
 
 #endif // MEDIALIBRARY_H

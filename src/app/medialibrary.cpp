@@ -24,9 +24,9 @@ MediaLibrary::MediaLibrary(QWidget *parent)
     connect(ui->mediaListWidget, SIGNAL(itemSelectionChanged()), this, SLOT(itemSelectionChanged()));
 }
 
-void MediaLibrary::loadFiles(QStringList &fileNames)
+void MediaLibrary::loadFiles(QStringList &filesPath)
 {
-    foreach (const QString &fileName, fileNames) {
+    foreach (const QString &fileName, filesPath) {
         auto file_info = QFileInfo(fileName);
         auto f_name = file_info.fileName();
         auto f_size = Utils::formatSize(file_info.size());
@@ -44,10 +44,10 @@ void MediaLibrary::addMediaPb_clicked()
 
 void MediaLibrary::removeMediaPb_clicked()
 {
-    QListWidgetItem *selectedItem = ui->mediaListWidget->currentItem();
-    if (selectedItem != nullptr) {
+    QListWidgetItem *selected_item = ui->mediaListWidget->currentItem();
+    if (selected_item != nullptr) {
         // only remove the item if it is selected
-        delete ui->mediaListWidget->takeItem(ui->mediaListWidget->row(selectedItem));
+        delete ui->mediaListWidget->takeItem(ui->mediaListWidget->row(selected_item));
     }
     updateRemoveMediaButton();
 }
@@ -76,15 +76,15 @@ void MediaLibrary::itemSelectionChanged()
 void MediaLibrary::updateRemoveMediaButton()
 {
     ui->removeMediaPb->setEnabled(ui->mediaListWidget->count() > 0);
-    QListWidgetItem *selectedItem = ui->mediaListWidget->currentItem();
-    ui->removeMediaPb->setEnabled(selectedItem != nullptr);
+    QListWidgetItem *selected_item = ui->mediaListWidget->currentItem();
+    ui->removeMediaPb->setEnabled(selected_item != nullptr);
 }
 
 void MediaLibrary::updateMediaInfoButton()
 {
     ui->mediaInfoPb->setEnabled(ui->mediaListWidget->count() > 0);
-    QListWidgetItem *selectedItem = ui->mediaListWidget->currentItem();
-    ui->mediaInfoPb->setEnabled(selectedItem != nullptr);
+    QListWidgetItem *selected_item = ui->mediaListWidget->currentItem();
+    ui->mediaInfoPb->setEnabled(selected_item != nullptr);
 }
 
 MediaLibrary::~MediaLibrary()
